@@ -1,2 +1,3 @@
-# Cloudflare Pages SPA fallback. Pages Functions under /api/* are evaluated separately.
-/* /index.html 200
+# Cloudflare Pages SPA fallbacks for client-side routes.
+/settings /index.html 200
+/story/* /index.html 200
