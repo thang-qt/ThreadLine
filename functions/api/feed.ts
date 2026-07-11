@@ -26,20 +26,22 @@ export const onRequestGet: PagesFunction = async (context) => {
   const sourceEnabled = sourceEnabledFromSearch(url.searchParams);
 
   const cacheUrl = new URL(context.request.url);
+  cacheUrl.searchParams.delete('refresh');
   cacheUrl.searchParams.set('hn', hn);
   cacheUrl.searchParams.set('lobsters', lobsters);
   cacheUrl.searchParams.set('hnEnabled', sourceEnabled.hn ? '1' : '0');
   cacheUrl.searchParams.set('lobstersEnabled', sourceEnabled.lobsters ? '1' : '0');
   const cacheKey = new Request(cacheUrl.toString(), context.request);
   const cache = edgeCache();
-  const cached = await cache.match(cacheKey);
+  const bypassCache = url.searchParams.has('refresh');
+  const cached = bypassCache ? undefined : await cache.match(cacheKey);
   if (cached) return cached;
 
   const payload = await fetchAggregatedFeed({ hn, lobsters, sourceEnabled });
   const status = payload.stories.length ? 200 : 502;
   const response = jsonResponse(payload, {
     status,
-    headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=600' }
+    headers: { 'Cache-Control': 'public, max-age=180, stale-while-revalidate=1800' }
   });
   if (payload.stories.length) context.waitUntil(cache.put(cacheKey, response.clone()));
   return response;

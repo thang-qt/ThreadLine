@@ -1,6 +1,7 @@
 import type { FeedResult, HnFeed, LobstersFeed, Source, Story } from '../../types';
 import { hnHtmlPath, lobstersHtmlPath, normalizeSourceEnabled, SOURCE_ORIGIN, type SourceEnabled } from '../../lib/sources';
 import { parseHnHtml, parseLobstersHtml } from './parseHtml';
+import { fetchWithTimeout } from './http';
 import { fetchHnFirebaseFallback, fetchLobstersJsonFallback } from './normalize';
 
 export interface FetchFeedOptions {
@@ -11,7 +12,7 @@ export interface FetchFeedOptions {
 }
 
 async function fetchText(url: string): Promise<string> {
-  const response = await fetch(url, { headers: { Accept: 'text/html,application/xhtml+xml' } });
+  const response = await fetchWithTimeout(url, { headers: { Accept: 'text/html,application/xhtml+xml' } });
   if (!response.ok) throw new Error(`${url} returned ${response.status}`);
   return response.text();
 }

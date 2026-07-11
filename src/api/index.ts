@@ -6,18 +6,19 @@ import type { FeedResult, ReaderSettings, Source, Story } from '../types';
 
 export type { FeedResult } from '../types';
 
-function feedApiUrl(settings: ReaderSettings): URL {
+function feedApiUrl(settings: ReaderSettings, bypassCache = false): URL {
   const configured = import.meta.env.VITE_FEED_API_URL?.trim();
   const url = new URL(configured || '/api/feed', window.location.origin);
   url.searchParams.set('hn', settings.hnFeed);
   url.searchParams.set('lobsters', settings.lobstersFeed);
   appendSourceEnabled(url.searchParams, settings.sourceEnabled);
+  if (bypassCache) url.searchParams.set('refresh', String(Date.now()));
   return url;
 }
 
-export async function fetchCombinedFeed(settings: ReaderSettings, signal?: AbortSignal): Promise<FeedResult> {
+export async function fetchCombinedFeed(settings: ReaderSettings, signal?: AbortSignal, options: { bypassCache?: boolean } = {}): Promise<FeedResult> {
   try {
-    const payload = await checkedJson<FeedResult>(feedApiUrl(settings), { signal });
+    const payload = await checkedJson<FeedResult>(feedApiUrl(settings, options.bypassCache), { signal });
     if (Array.isArray(payload.stories)) {
       return {
         stories: payload.stories.filter(story => settings.sourceEnabled[story.source]),

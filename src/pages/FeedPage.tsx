@@ -28,11 +28,11 @@ export function FeedPage({ settings, onChange }: { settings: ReaderSettings; onC
           <button className={`layout-btn ${settings.layout === 'list' ? 'active' : ''}`} onClick={() => onChange({ ...settings, layout: 'list' })} title="Classic List view">List</button>
           <button className={`layout-btn ${settings.layout === 'newspaper' ? 'active' : ''}`} onClick={() => onChange({ ...settings, layout: 'newspaper' })} title="Newspaper Grid view">Grid</button>
         </div>
-        <button className="text-button refresh-btn" onClick={refresh}>Refresh</button>
+        <button className="text-button refresh-btn" onClick={refresh} disabled={loading}>{loading ? 'Refreshing…' : 'Refresh'}</button>
       </div>
     </div>
-    {Object.entries(feed.errors).map(([source, error]) => <aside className="notice" key={source}><strong>{source === 'hn' ? 'Hacker News' : 'Lobsters'} unavailable.</strong> {error}</aside>)}
-    {loading ? <p className="loader">Loading today’s stories…</p> : ranked.length ? (
+    {Object.entries(feed.errors).map(([source, error]) => <aside className="notice" key={source}><strong>{source === 'hn' ? 'Hacker News' : 'Lobsters'} unavailable.</strong> {error}</aside>) }
+    {loading && ranked.length === 0 ? <p className="loader">Loading today’s stories…</p> : ranked.length ? (
       settings.layout === 'list' ? <section className="list-layout" aria-label="Combined news feed">
         {ranked.map((story, index) => <div key={story.id} className="list-row"><span className="story-rank">{index + 1}</span><StoryCard story={story} featured={false} onReadHere={openReader}/></div>)}
       </section> : <section className="newspaper-grid" aria-label="Combined news feed">

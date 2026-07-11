@@ -46,7 +46,7 @@ export function DiscussionView({ story, settings, onChange, initialReadHere = fa
 
   const discussionColumn = <section className="discussion-column" aria-label="Discussion" style={readHere ? { flex: 1 } : undefined}>
     <DiscussionToolbar commentsCount={visibleIds.length} readHere={readHere} settings={settings} onChange={onChange} onCloseReader={closeReader} />
-    {loading ? <p className="loader">Fetching discussion…</p> : error ? <p className="error-card">{error}</p> : comments.length ? <ol className="comment-list">{comments.map(node => <CommentThread key={node.id} node={node} depth={0} collapsed={collapsed} active={active} visibleIds={visibleIds} refs={refs} toggle={toggle} moveFrom={moveFrom} storyAuthor={story.author} source={story.source}/>)}</ol> : <p className="muted">No comments yet.</p>}
+    {loading && comments.length === 0 ? <p className="loader">Fetching discussion…</p> : error && comments.length === 0 ? <p className="error-card">{error}</p> : comments.length ? <ol className="comment-list">{comments.map(node => <CommentThread key={node.id} node={node} depth={0} collapsed={collapsed} active={active} visibleIds={visibleIds} refs={refs} toggle={toggle} moveFrom={moveFrom} storyAuthor={story.author} source={story.source}/>)}</ol> : <p className="muted">No comments yet.</p>}
   </section>;
 
   return <div className={`discussion-page ${readHere ? 'reading' : ''} ${overlay ? 'discussion-overlay' : ''}`} ref={dialogRef} role={overlay ? 'dialog' : undefined} aria-modal={overlay ? true : undefined} aria-label={overlay ? `${story.title} reader and discussion` : undefined} tabIndex={overlay ? -1 : undefined}>

@@ -103,6 +103,15 @@
   color: var(--color-accent);
 }
 
+.feed-status {
+  margin: -0.5rem 0 1rem;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* Elegant 1px Grid Gap system for Newspaper layouts */
 .newspaper-grid {
   display: grid;
