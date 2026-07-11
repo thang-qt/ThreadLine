@@ -1,0 +1,183 @@
+/* ==========================================================================
+   5. Front Page & Newspaper Feed Grid
+   ========================================================================== */
+
+.edition-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+}
+
+.edition-bar strong {
+  color: var(--color-text-strong);
+}
+
+.edition-bar button.text-button {
+  color: var(--color-accent);
+  font-weight: 700;
+  border: 1px solid var(--color-border-soft);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.edition-bar button.text-button:hover {
+  background-color: var(--color-active-bg);
+  border-color: var(--color-accent);
+}
+
+.edition-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.layout-switcher {
+  display: inline-flex;
+  background-color: var(--bg-app);
+  border: 1px solid var(--color-border);
+  padding: 2px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.layout-btn {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.layout-btn:hover {
+  color: var(--color-text-strong);
+}
+
+.layout-btn.active {
+  color: var(--color-text-strong);
+  background-color: var(--bg-card);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.edition-bar button.text-button.refresh-btn {
+  border-color: var(--color-border);
+  background-color: var(--bg-card);
+  color: var(--color-muted);
+}
+
+.edition-bar button.text-button.refresh-btn:hover {
+  color: var(--color-text-strong);
+  border-color: var(--color-muted);
+  background-color: var(--bg-card-hover);
+}
+
+.notice {
+  background-color: var(--color-active-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-strong);
+}
+
+.notice strong {
+  color: var(--color-accent);
+}
+
+/* Elegant 1px Grid Gap system for Newspaper layouts */
+.newspaper-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--column-count, 3), minmax(0, 1fr));
+  background-color: var(--color-border);
+  gap: 1px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Classic Listing Layout (alternate interface like Lobsters/HN) */
+.list-layout {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+}
+
+.list-row {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--color-border-soft);
+  padding: 0.65rem 1rem;
+  transition: background-color var(--transition-fast);
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}
+
+.list-row:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.story-rank {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--color-muted);
+  min-width: 24px;
+  margin-top: 0.2rem;
+  text-align: right;
+  padding-right: 0.65rem;
+  user-select: none;
+}
+
+/* Make StoryCard render on a single, clean line block inside lists */
+.list-row .story-card {
+  background-color: transparent !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  border: none !important;
+  flex: 1;
+}
+
+.list-row .story-card .story-kicker {
+  margin-bottom: 0.15rem;
+}
+
+.list-row .story-card .story-title {
+  margin-bottom: 0.15rem;
+  font-size: 1.05em;
+  font-weight: 600;
+}
+
+.list-row .story-card .story-meta {
+  margin-top: 0.15rem;
+  font-size: 0.72em;
+}
+
+.list-row .story-card .tag-row {
+  margin-top: 0.25rem;
+}

@@ -1,0 +1,2 @@
+# Cloudflare Pages SPA fallback. Pages Functions under /api/* are evaluated separately.
+/* /index.html 200

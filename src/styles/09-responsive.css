@@ -1,0 +1,105 @@
+/* ==========================================================================
+   11. Responsive Layout Adjustments
+   ========================================================================== */
+
+@media (max-width: 960px) {
+  .app {
+    padding: 0 clamp(1rem, 2vw, 2rem) 3rem;
+  }
+  
+  .newspaper-grid {
+    grid-template-columns: repeat(min(2, var(--column-count, 3)), minmax(0, 1fr));
+  }
+  
+  .story-card.featured {
+    grid-column: span 1;
+    min-height: auto;
+  }
+  
+  .story-card.featured .story-title {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .discussion-page.reading .reading-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .masthead {
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.55rem 0;
+  }
+  
+  .masthead > p {
+    display: none;
+  }
+  
+  .masthead nav {
+    width: auto;
+    margin-left: auto;
+    justify-content: flex-end;
+    gap: 0.8rem;
+  }
+
+  .masthead nav a {
+    font-size: 0.72rem;
+  }
+  
+  .edition-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  
+  .edition-bar button.text-button {
+    align-self: stretch;
+    text-align: center;
+  }
+  
+  .newspaper-grid {
+    display: block;
+    border-radius: 6px;
+  }
+  
+  .story-card {
+    border-bottom: 1px solid var(--color-border);
+    min-height: auto;
+  }
+  
+  .story-card:last-child {
+    border-bottom: none;
+  }
+  
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sources-fieldset {
+    grid-column: span 1;
+  }
+  
+  .source-control {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .slider-container {
+    max-width: none;
+  }
+  
+  .discussion-page.reading .reading-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  
+  .discussion-page.reading .article-pane {
+    display: none; /* Hide article pane on mobile reading mode to focus on discussions */
+  }
+}

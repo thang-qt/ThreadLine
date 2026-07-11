@@ -1,0 +1,177 @@
+/* ==========================================================================
+   8. Nested Threaded Comments (Thoughtful design)
+   ========================================================================== */
+
+.comment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Nested lists: indent and create interactive visual tree guide rails */
+.comment-list .comment-list {
+  border-left: 2px solid var(--color-border-soft);
+  margin: 0.5rem 0 0 0.5rem;
+  padding-left: clamp(0.75rem, 3.5vw, 1.75rem);
+  transition: border-left-color var(--transition-fast);
+}
+
+/* Interactive highlight path: hovering a child list colors its visual guide rail */
+.thread-highlight-enabled .comment-list .comment-list:hover {
+  border-left-color: var(--color-border-active);
+}
+
+.comment {
+  padding: var(--comment-padding) 0;
+  outline: none;
+  scroll-margin-top: 4rem;
+  transition: background-color var(--transition-fast);
+}
+
+.comment-content {
+  border-radius: 6px;
+  transition: background-color var(--transition-fast);
+}
+
+.comment.active > .comment-content {
+  animation: comment-highlight-pulse 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes comment-highlight-pulse {
+  0%, 35% {
+    background-color: var(--color-active-bg);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.comment-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+.comment-byline strong {
+  color: var(--color-text-strong);
+  font-weight: 700;
+}
+
+.comment-author.op {
+  color: var(--color-accent) !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+.op-badge {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background-color: var(--color-accent);
+  color: white;
+  line-height: 1;
+}
+
+.comment-byline time {
+  color: var(--color-muted);
+}
+
+
+
+.comment-byline button {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.comment-byline button:hover {
+  color: var(--color-accent);
+}
+
+.comment-byline button.comment-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  padding: 0;
+  font-size: 0.95em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-muted);
+  border: none;
+  background-color: transparent;
+  margin-right: 0.2rem;
+}
+
+.comment-byline button.comment-toggle:hover {
+  color: var(--color-accent);
+}
+
+
+.comment-body {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+.comment-body p {
+  margin: 0.5rem 0;
+}
+
+.comment-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.comment-body a:hover {
+  color: var(--color-text-strong);
+}
+
+.comment-body blockquote {
+  margin: 0.75rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--color-border-active);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.comment-body pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  overflow-x: auto;
+  padding: 0.85rem;
+  background-color: var(--bg-app);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  margin: 0.75rem 0;
+}
+
+.comment-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 2px 4px;
+  background-color: var(--color-border-soft);
+  border-radius: 4px;
+}
+
+.comment-body pre code {
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+}

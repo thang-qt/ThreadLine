@@ -1,0 +1,14 @@
+import type { Density, FontChoice, LayoutChoice, ReaderSettings, Theme } from '../../types';
+import { numberValue } from './settingsHelpers';
+
+export function AppearanceSettings({ settings, onChange }: { settings: ReaderSettings; onChange: (settings: ReaderSettings) => void }) {
+  return <div className="settings-section"><h2 className="section-title">Appearance</h2><div className="settings-grid">
+    <div className="settings-control"><span className="control-label">Theme</span><select value={settings.theme} onChange={e => onChange({ ...settings, theme: e.target.value as Theme })}><option value="light">Light</option><option value="dark">Dark</option><option value="sepia">Sepia</option></select></div>
+    <div className="settings-control"><span className="control-label">Font Family</span><select value={settings.font} onChange={e => onChange({ ...settings, font: e.target.value as FontChoice })}><option value="serif">Editorial serif</option><option value="system">System sans</option><option value="mono">Monospace</option></select></div>
+    <div className="settings-control"><div className="control-header"><span className="control-label">Type scale</span><output className="control-output">{settings.typeScale.toFixed(2)}×</output></div><input type="range" min="0.85" max="1.3" step="0.05" value={settings.typeScale} onChange={e => onChange({ ...settings, typeScale: numberValue(e.target.value, settings.typeScale) })}/></div>
+    <div className="settings-control"><span className="control-label">Density</span><select value={settings.density} onChange={e => onChange({ ...settings, density: e.target.value as Density })}><option value="relaxed">Relaxed</option><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></div>
+    <div className="settings-control"><div className="control-header"><span className="control-label">Columns (Grid Layout)</span><output className="control-output">{settings.columns}</output></div><input type="range" min="1" max="5" value={settings.columns} disabled={settings.layout === 'list'} onChange={e => onChange({ ...settings, columns: numberValue(e.target.value, settings.columns) })}/></div>
+    <div className="settings-control"><span className="control-label">Default Layout</span><select value={settings.layout} onChange={e => onChange({ ...settings, layout: e.target.value as LayoutChoice })}><option value="list">Classic List (HN/Lobsters)</option><option value="newspaper">Newspaper Grid</option></select></div>
+    <div className="settings-control"><span className="control-label">Thread Highlight</span><label className="checkbox-container"><input type="checkbox" checked={settings.highlightThreads} onChange={e => onChange({ ...settings, highlightThreads: e.target.checked })}/><span className="checkbox-label">Highlight threaded guide rails on hover</span></label></div>
+  </div></div>;
+}

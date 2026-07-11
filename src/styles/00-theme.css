@@ -1,0 +1,92 @@
+/* ==========================================================================
+   1. Core Variables & Theme Definitions
+   ========================================================================== */
+
+:root {
+  /* Transition timings */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  
+  /* Font Family Stacks */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Merriweather", "Lora", "Iowan Old Style", Charter, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Roboto Mono, monospace;
+}
+
+/* Light Theme Variables */
+:root,
+.theme-light {
+  --bg-app: hsl(210, 20%, 98%);
+  --bg-card: hsl(0, 0%, 100%);
+  --bg-card-hover: hsl(354, 100%, 99.5%);
+  --color-text: hsl(215, 25%, 12%);
+  --color-text-strong: hsl(215, 30%, 8%);
+  --color-muted: hsl(215, 12%, 46%);
+  
+  --color-accent: hsl(354, 85%, 48%);
+  --color-accent-hn: hsl(25, 95%, 45%);
+  --color-accent-lobsters: hsl(354, 85%, 48%);
+  
+  --bg-badge-hn: hsl(25, 95%, 93%);
+  --bg-badge-lobsters: hsl(354, 90%, 95%);
+  
+  --color-border: hsl(215, 15%, 88%);
+  --color-border-soft: hsl(215, 15%, 93%);
+  --color-border-active: hsl(354, 85%, 48%);
+  
+  --color-active-bg: hsl(354, 85%, 97%);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.04);
+}
+
+.theme-dark {
+  /* Deep blue-charcoal surfaces are softer than neutral black while keeping
+     long-form text crisp. Muted text remains above WCAG AA on every surface. */
+  color-scheme: dark;
+  --bg-app: hsl(198, 19%, 9%);
+  --bg-card: hsl(198, 17%, 13%);
+  --bg-card-hover: hsl(198, 16%, 17%);
+  --color-text: hsl(195, 14%, 86%);
+  --color-text-strong: hsl(190, 20%, 96%);
+  --color-muted: hsl(195, 10%, 65%);
+  
+  --color-accent: hsl(7, 86%, 72%);
+  --color-accent-hn: hsl(31, 88%, 67%);
+  --color-accent-lobsters: hsl(7, 86%, 72%);
+  
+  --bg-badge-hn: hsl(31, 38%, 19%);
+  --bg-badge-lobsters: hsl(7, 36%, 19%);
+  
+  --color-border: hsl(196, 13%, 27%);
+  --color-border-soft: hsl(197, 14%, 20%);
+  --color-border-active: hsl(7, 86%, 72%);
+  
+  --color-active-bg: hsl(7, 34%, 19%);
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.38);
+}
+
+/* Sepia Theme Variables */
+.theme-sepia {
+  --bg-app: hsl(36, 32%, 90%);
+  --bg-card: hsl(36, 32%, 93%);
+  --bg-card-hover: hsl(36, 32%, 95%);
+  --color-text: hsl(36, 45%, 16%);
+  --color-text-strong: hsl(36, 50%, 10%);
+  --color-muted: hsl(36, 25%, 38%);
+  
+  --color-accent: hsl(10, 75%, 40%);
+  --color-accent-hn: hsl(25, 80%, 40%);
+  --color-accent-lobsters: hsl(5, 75%, 40%);
+  
+  --bg-badge-hn: hsl(25, 60%, 86%);
+  --bg-badge-lobsters: hsl(5, 60%, 86%);
+  
+  --color-border: hsl(36, 20%, 80%);
+  --color-border-soft: hsl(36, 20%, 85%);
+  --color-border-active: hsl(10, 75%, 40%);
+  
+  --color-active-bg: hsl(10, 60%, 86%);
+  --shadow-sm: 0 1px 3px 0 rgba(40, 20, 0, 0.05);
+  --shadow-md: 0 6px 18px 0 rgba(40, 20, 0, 0.08);
+}

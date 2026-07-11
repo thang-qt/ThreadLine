@@ -1,0 +1,92 @@
+/* ==========================================================================
+   2. Density Adjustments
+   ========================================================================== */
+
+.density-relaxed {
+  --story-padding: 1.5rem 1.75rem;
+  --story-gap: 1.15rem;
+  --line-height-body: 1.65;
+  --font-size-base: 16px;
+  --comment-padding: 1rem;
+}
+
+.density-comfortable {
+  --story-padding: 1.1rem 1.35rem;
+  --story-gap: 0.85rem;
+  --line-height-body: 1.55;
+  --font-size-base: 15px;
+  --comment-padding: 0.75rem;
+}
+
+.density-compact {
+  --story-padding: 0.65rem 0.9rem;
+  --story-gap: 0.5rem;
+  --line-height-body: 1.45;
+  --font-size-base: 14px;
+  --comment-padding: 0.45rem;
+}
+
+/* ==========================================================================
+   3. Base Layout & Typography Defaults
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: calc(var(--font-size-base, 15px) * var(--type-scale, 1.0));
+  scroll-behavior: smooth;
+  height: 100%;
+  transition: font-size var(--transition-normal);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  height: 100%;
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--color-text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  font-family: var(--reader-font);
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--bg-app);
+  min-height: 100vh;
+  padding: 0 clamp(1rem, 4vw, 4rem) 5rem;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+button,
+select,
+input {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.masthead,
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+}
