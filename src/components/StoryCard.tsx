@@ -20,7 +20,7 @@ export function StoryCard({ story, featured = false, onReadHere }: StoryCardProp
       <span className="story-time">{timeAgo(story.createdAt)}</span>
       <span className="meta-separator">•</span>
       <Link to={`/story/${story.source}/${encodeURIComponent(story.sourceId)}`} state={{ story }} className="story-comments-link">{story.commentsCount} comments</Link>
-      {hasExternalUrl ? <><span className="meta-separator">•</span><button type="button" className="story-read-link" onClick={() => onReadHere?.(story)}>read here</button></> : null}
+      {hasExternalUrl ? <><span className="meta-separator story-read-separator">•</span><button type="button" className="story-read-link" onClick={() => onReadHere?.(story)}>read here</button></> : null}
     </div>
   </article>;
 }

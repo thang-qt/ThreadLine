@@ -76,6 +76,12 @@
   .story-card:last-child {
     border-bottom: none;
   }
+
+  .story-read-separator,
+  .story-read-link,
+  .read-here-action {
+    display: none !important;
+  }
   
   .settings-grid {
     grid-template-columns: 1fr;

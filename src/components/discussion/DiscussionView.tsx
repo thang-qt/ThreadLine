@@ -55,7 +55,7 @@ export function DiscussionView({ story, settings, onChange, initialReadHere = fa
       <p className="section-label">{sourceLabel(story.source)}</p>
       <h1>{story.title}</h1>
       <div className="story-actions">
-        {currentArticleUrl && <button className={readHere ? 'selected' : ''} onClick={() => setReadHere(value => !value)}>{readHere ? 'Close reader' : 'Read here'}</button>}
+        {currentArticleUrl && <button className={`read-here-action ${readHere ? 'selected' : ''}`} onClick={() => setReadHere(value => !value)}>{readHere ? 'Close reader' : 'Read here'}</button>}
         {currentArticleUrl && <a href={currentArticleUrl} target="_blank" rel="noreferrer">Open article ↗</a>}
         <a href={story.discussionUrl} target="_blank" rel="noreferrer">Original discussion ↗</a>
       </div>
