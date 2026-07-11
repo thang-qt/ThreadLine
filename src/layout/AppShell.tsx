@@ -20,5 +20,9 @@ export function AppShell({ settings, children }: { settings: ReaderSettings; chi
       <nav aria-label="Main navigation"><Link to="/">Latest</Link><Link to="/settings">Options</Link></nav>
     </header>
     {children}
+    <footer className="site-footer">
+      <span>Threadline</span>
+      <a href="https://thangqt.com" target="_blank" rel="noreferrer noopener">A project by ThangQT</a>
+    </footer>
   </div>;
 }

@@ -75,3 +75,28 @@
   transform: scaleX(1);
   transform-origin: left;
 }
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.site-footer span {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--color-text-strong);
+}
+
+.site-footer a {
+  font-weight: 700;
+}
+
+.site-footer a:hover {
+  color: var(--color-accent);
+}
