@@ -6,6 +6,11 @@ describe('settings normalization', () => {
     expect(STORAGE_KEY).toBe('hnster.preferences.v1');
   });
 
+  it('defaults thread guide rail hover highlighting off', () => {
+    expect(defaultSettings.highlightThreads).toBe(false);
+    expect(normalizeSettings({}).highlightThreads).toBe(false);
+  });
+
   it('falls back from corrupt shapes and clamps values', () => {
     const settings = normalizeSettings({ theme: 'bad', columns: 99, typeScale: 2, sourceWeight: { hn: -1, lobsters: 10 } });
     expect(settings.theme).toBe(defaultSettings.theme);

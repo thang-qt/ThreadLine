@@ -16,7 +16,7 @@ export const defaultSettings: ReaderSettings = {
   lobstersFeed: 'hottest',
   blockedDomains: [],
   lobstersTags: [],
-  highlightThreads: true
+  highlightThreads: false
 };
 
 // Compatibility key from the original HNster name. Do not change without migration.
