@@ -29,12 +29,21 @@ export function DiscussionView({ story, settings, onChange, initialReadHere = fa
 
   useEffect(() => {
     if (!overlay) return;
-    dialogRef.current?.focus();
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    dialogRef.current?.focus({ preventScroll: true });
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose?.();
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
   }, [overlay, onClose]);
 
   const toggle = (commentId: string) => setCollapsed(old => {
