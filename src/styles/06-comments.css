@@ -175,3 +175,38 @@
   background-color: transparent;
   border-radius: 0;
 }
+
+/* Styling for new comments */
+.comment.new > .comment-content {
+  border-left: 3px solid var(--color-success);
+  padding-left: 0.75rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.new-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background-color: var(--bg-badge-new);
+  color: var(--color-badge-new-text);
+  line-height: 1;
+  border: none;
+}
+
+.new-badge.clickable {
+  cursor: pointer;
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+
+.new-badge.clickable:hover {
+  transform: scale(1.05);
+  filter: brightness(0.95);
+}
+
+.new-badge.clickable:active {
+  transform: scale(0.95);
+}

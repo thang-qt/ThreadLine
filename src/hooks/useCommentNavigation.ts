@@ -18,7 +18,7 @@ export function useCommentNavigation(comments: CommentNode[], collapsed: Set<str
     setActive(commentId);
     requestAnimationFrame(() => {
       const element = refs.current.get(commentId);
-      element?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       element?.focus({ preventScroll: true });
     });
   };
@@ -29,5 +29,5 @@ export function useCommentNavigation(comments: CommentNode[], collapsed: Set<str
     if (next) focusId(next);
   };
 
-  return { active, refs, visibleIds, moveFrom };
+  return { active, refs, visibleIds, moveFrom, focusId };
 }

@@ -282,6 +282,32 @@ body.resizing .resize-handle::after {
   letter-spacing: 0.05em;
 }
 
+.new-comments-indicator {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  background-color: var(--bg-badge-new);
+  color: var(--color-badge-new-text);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.new-comments-indicator:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+}
+
+.new-comments-indicator:active {
+  transform: scale(0.95);
+}
+
 /* Quick Reader Settings in Discussion Header (Popover menu) */
 .quick-settings-container {
   position: relative;

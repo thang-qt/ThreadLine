@@ -72,6 +72,62 @@ export function writeCachedComments(source: Source, sourceId: string, comments: 
   safeWrite(commentsCacheKey(source, sourceId), { comments, cachedAt: Date.now() } satisfies CachedComments);
 }
 
+const SEEN_COMMENTS_PREFIX = 'threadline.seen.v1';
+const SEEN_INDEX_KEY = 'threadline.seen_index.v1';
+const MAX_SEEN_THREADS = 100;
+
+export function seenCommentsKey(source: Source, sourceId: string): string {
+  return `${SEEN_COMMENTS_PREFIX}:${source}:${sourceId}`;
+}
+
+export function hasSeenComments(source: Source, sourceId: string): boolean {
+  if (!canUseStorage()) return false;
+  return window.localStorage.getItem(seenCommentsKey(source, sourceId)) !== null;
+}
+
+export function readSeenComments(source: Source, sourceId: string): string[] {
+  const key = seenCommentsKey(source, sourceId);
+  const cached = safeRead<string[]>(key);
+  if (!Array.isArray(cached)) return [];
+
+  // Update LRU index position
+  updateSeenIndex(key);
+
+  return cached;
+}
+
+export function writeSeenComments(source: Source, sourceId: string, commentIds: string[]): void {
+  const key = seenCommentsKey(source, sourceId);
+  safeWrite(key, commentIds);
+  updateSeenIndex(key, true);
+}
+
+function updateSeenIndex(key: string, isWrite = false): void {
+  if (!canUseStorage()) return;
+  try {
+    const raw = window.localStorage.getItem(SEEN_INDEX_KEY);
+    let index: string[] = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(index)) index = [];
+
+    // Remove if already exists to push to front
+    index = index.filter(k => k !== key);
+    index.unshift(key);
+
+    // Evict oldest if limit exceeded
+    if (isWrite && index.length > MAX_SEEN_THREADS) {
+      const toRemove = index.slice(MAX_SEEN_THREADS);
+      for (const k of toRemove) {
+        window.localStorage.removeItem(k);
+      }
+      index = index.slice(0, MAX_SEEN_THREADS);
+    }
+
+    window.localStorage.setItem(SEEN_INDEX_KEY, JSON.stringify(index));
+  } catch {
+    // Ignore storage issues
+  }
+}
+
 export function ageLabel(timestamp: number): string {
   const seconds = Math.max(0, Math.round((Date.now() - timestamp) / 1000));
   if (seconds < 45) return 'just now';

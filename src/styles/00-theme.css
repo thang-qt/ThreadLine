@@ -35,6 +35,9 @@
   --color-border-active: hsl(354, 85%, 48%);
   
   --color-active-bg: hsl(354, 85%, 97%);
+  --color-success: hsl(142, 72%, 29%);
+  --bg-badge-new: hsl(142, 76%, 93%);
+  --color-badge-new-text: hsl(142, 72%, 29%);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
   --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.04);
 }
@@ -62,6 +65,9 @@
   --color-border-active: hsl(7, 86%, 72%);
   
   --color-active-bg: hsl(7, 34%, 19%);
+  --color-success: hsl(142, 70%, 45%);
+  --bg-badge-new: hsl(142, 50%, 15%);
+  --color-badge-new-text: hsl(142, 70%, 55%);
   --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.28);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.38);
 }
@@ -87,6 +93,9 @@
   --color-border-active: hsl(10, 75%, 40%);
   
   --color-active-bg: hsl(10, 60%, 86%);
+  --color-success: hsl(142, 60%, 30%);
+  --bg-badge-new: hsl(142, 45%, 84%);
+  --color-badge-new-text: hsl(142, 60%, 25%);
   --shadow-sm: 0 1px 3px 0 rgba(40, 20, 0, 0.05);
   --shadow-md: 0 6px 18px 0 rgba(40, 20, 0, 0.08);
 }
