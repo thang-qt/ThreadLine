@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { CommentNode, ReaderSettings, Story } from '../../types';
 import { articleUrl, sourceLabel } from '../../lib/sources';
+import { nextNewCommentId } from '../../lib/commentNavigation';
 import { useComments } from '../../hooks/useComments';
 import { useCommentNavigation } from '../../hooks/useCommentNavigation';
 import { CommentThread } from './CommentThread';
@@ -28,16 +29,15 @@ export function DiscussionView({ story, settings, onChange, initialReadHere = fa
 
   const [newCommentIds, setNewCommentIds] = useState<Set<string>>(new Set());
   const initialSeenIdsRef = useRef<Set<string> | null>(null);
-  const currentStoryKeyRef = useRef<string>('');
 
   const storyKey = `${story.source}:${story.sourceId}`;
 
-  // Reset session refs if the user switches stories
-  if (currentStoryKeyRef.current !== storyKey) {
-    currentStoryKeyRef.current = storyKey;
+  // Reset session state after switching stories. State updates during render can
+  // cause React's "Cannot update a component while rendering" error.
+  useEffect(() => {
     initialSeenIdsRef.current = null;
     setNewCommentIds(new Set());
-  }
+  }, [storyKey]);
 
   useEffect(() => {
     if (loading || comments.length === 0) return;
@@ -112,24 +112,9 @@ export function DiscussionView({ story, settings, onChange, initialReadHere = fa
   });
   const closeReader = () => onClose ? onClose() : setReadHere(false);
 
-  const jumpToNextNew = () => {
-    const visibleNewIds = visibleIds.filter(id => newCommentIds.has(id));
-    if (visibleNewIds.length === 0) return;
-
-    let targetId = visibleNewIds[0];
-    if (active) {
-      const currentIndex = visibleNewIds.indexOf(active);
-      if (currentIndex !== -1 && currentIndex < visibleNewIds.length - 1) {
-        targetId = visibleNewIds[currentIndex + 1];
-      } else {
-        const activeIndex = visibleIds.indexOf(active);
-        const nextNew = visibleNewIds.find(id => visibleIds.indexOf(id) > activeIndex);
-        if (nextNew) {
-          targetId = nextNew;
-        }
-      }
-    }
-    focusId(targetId);
+  const jumpToNextNew = (fromCommentId?: string) => {
+    const targetId = nextNewCommentId(visibleIds, newCommentIds, fromCommentId ?? active ?? undefined);
+    if (targetId) focusId(targetId);
   };
 
   const discussionColumn = <section className="discussion-column" aria-label="Discussion" style={readHere ? { flex: 1 } : undefined}>

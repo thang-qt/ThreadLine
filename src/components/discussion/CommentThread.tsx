@@ -16,7 +16,7 @@ interface CommentThreadProps {
   storyAuthor?: string;
   source: Source;
   newCommentIds: Set<string>;
-  onJumpToNextNew?: () => void;
+  onJumpToNextNew?: (fromCommentId: string) => void;
 }
 
 export function CommentThread({ node, depth, collapsed, active, visibleIds, refs, toggle, moveFrom, storyAuthor, source, newCommentIds, onJumpToNextNew }: CommentThreadProps) {
@@ -38,11 +38,11 @@ export function CommentThread({ node, depth, collapsed, active, visibleIds, refs
             role="button"
             tabIndex={0}
             className="new-badge clickable"
-            onClick={onJumpToNextNew}
+            onClick={() => onJumpToNextNew?.(node.id)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                onJumpToNextNew?.();
+                onJumpToNextNew?.(node.id);
               }
             }}
             title="Jump to next new comment"
