@@ -1,3 +1,0 @@
-# Cloudflare Pages SPA fallbacks for client-side routes.
-/settings / 200
-/story/* / 200

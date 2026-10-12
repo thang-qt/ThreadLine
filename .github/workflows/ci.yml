@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: make format-check
+      - run: make test
+      - run: make build
+      - run: go test -race -tags production ./...
+      - run: go vet -tags production ./...
+      - uses: actions/upload-artifact@v4
+        with:
+          name: threadline-linux-amd64
+          path: threadline
+          if-no-files-found: error

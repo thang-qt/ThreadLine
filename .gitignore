@@ -1,11 +1,7 @@
-node_modules/
-dist/
+/threadline
 .direnv/
 .env
 .env.local
 .DS_Store
-*.tsbuildinfo
-
-plan.md
-progress.md
-research.md
+node_modules/
+.build/

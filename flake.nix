@@ -1,5 +1,5 @@
 {
-  description = "Threadline static reader development shell";
+  description = "Threadline Go development shell";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -10,7 +10,7 @@
       devShells = builtins.listToAttrs (map (system: {
         name = system;
         value.default = let pkgs = import nixpkgs { inherit system; }; in pkgs.mkShell {
-          packages = [ pkgs.nodejs_22 pkgs.pnpm ];
+          packages = [ pkgs.go pkgs.nodejs_22 pkgs.gnumake ];
         };
       }) systems);
     };
