@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="{{ favicon }}" />
+    <meta name="color-scheme" content="light" />
+    <title>
+      Threadline — {{ if eq .Mode "recent" }}Recent{{ else }}Active{{ end }}
+    </title>
+<style>{{.CSS}}</style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <a class="brand" href="/" aria-label="Threadline home">{{ logo }}</a>
+        <nav aria-label="Main">
+          <a
+            {{ if eq .Mode "active" }}aria-current="page"{{ end }}
+            href="/?source={{ .Source }}"
+            >Active</a
+          ><a
+            {{ if eq .Mode "recent" }}aria-current="page"{{ end }}
+            href="/?mode=recent&amp;source={{ .Source }}"
+            >Recent</a
+          >
+        </nav>
+        <a class="header-settings" href="/settings">Settings</a>
+      </header>
+      <main>
+        <div class="filters">
+          <nav aria-label="Sources">
+            <a
+              {{ if eq .Source "all" }}aria-current="page"{{ end }}
+              href="/?mode={{ .Mode }}"
+              >All</a
+            ><a
+              {{ if eq .Source "hn" }}aria-current="page"{{ end }}
+              href="/?mode={{ .Mode }}&amp;source=hn"
+              >Hacker News</a
+            ><a
+              {{ if eq .Source "lobsters" }}aria-current="page"{{ end }}
+              href="/?mode={{ .Mode }}&amp;source=lobsters"
+              >Lobsters</a
+            >
+          </nav>
+          <form role="search" method="get">
+            <input type="hidden" name="mode" value="{{ .Mode }}" /><input
+              type="hidden"
+              name="source"
+              value="{{ .Source }}"
+            /><input
+              name="q"
+              aria-label="Search loaded stories"
+              placeholder="Search stories"
+              value="{{ .Query }}"
+              type="search"
+            /><button>Search</button>
+          </form>
+        </div>
+        {{ if .Tag }}
+          <p class="notice">
+            Tag: {{ .Tag }} ·
+            <a href="/?mode={{ .Mode }}&amp;source={{ .Source }}"
+              >Clear filter</a
+            >
+          </p>
+        {{ end }}{{ if .Error }}
+          <p class="notice" role="status">{{ .Error }}</p>
+        {{ end }}
+        <ol class="stories">
+          {{ range .Stories }}
+            <li class="story">
+              <div class="score">
+                <span class="arrow" aria-hidden="true"></span
+                ><span aria-label="{{ .Points }} points">{{ .Points }}</span>
+              </div>
+              <div class="details">
+                <div class="headline">
+                  <a class="title" href="{{ .URL }}">{{ .Title }}</a>
+                  {{ range .Tags }}
+                    <a class="tag" href="/?source=lobsters&amp;tag={{ . }}"
+                      >{{ . }}</a
+                    >
+                  {{ end }}<span class="domain">({{ .Domain }})</span>
+                </div>
+                <div class="byline">
+                  <a class="source {{ .Source }}" href="/?source={{ .Source }}"
+                    >{{ label .Source }}</a
+                  >
+                  <span
+                    >via {{ .Author }} ·
+                    <time
+                      datetime="{{ .Created.Format "2006-01-02T15:04:05Z07:00" }}"
+                      title="{{ .Created.Format "Jan 2, 2006 15:04 MST" }}"
+                      >{{ age .Created }} ago</time
+                    >
+                    ·</span
+                  >
+                  <a href="{{ .LocalDiscussion }}"
+                    >{{ if eq .Comments 0 }}
+                      discuss
+                    {{ else }}
+                      {{ .Comments }} comments
+                    {{ end }}</a
+                  >
+                </div>
+              </div>
+              <a
+                class="comment-count"
+                href="{{ .LocalDiscussion }}"
+                aria-label="{{ .Comments }} comments"
+                >{{ .Comments }}</a
+              >
+            </li>
+          {{ else }}
+            <li class="empty">
+              No stories to show.
+              {{ if .Error }}
+                Try again in a moment.
+              {{ else }}
+                Try another source or search.
+              {{ end }}
+            </li>
+          {{ end }}
+        </ol>
+        <nav class="pagination" aria-label="Pages">
+          {{ if .Previous }}
+            <a
+              href="/?mode={{ .Mode }}&amp;source={{ .Source }}&amp;q={{ .Query }}&amp;tag={{ .Tag }}&amp;page={{ .Previous }}"
+              >← Previous</a
+            >
+          {{ end }}{{ if .Next }}
+            <a
+              href="/?mode={{ .Mode }}&amp;source={{ .Source }}&amp;q={{ .Query }}&amp;tag={{ .Tag }}&amp;page={{ .Next }}"
+              >Page {{ .Next }} →</a
+            >
+          {{ end }}
+        </nav>
+      </main>
+      <footer>
+        <span>Threadline</span
+        ><a href="https://news.ycombinator.com">Hacker News</a
+        ><a href="https://lobste.rs">Lobsters</a>
+      </footer>
+    </div>
+  </body>
+</html>

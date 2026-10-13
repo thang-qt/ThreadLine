@@ -1,47 +1,46 @@
 # Threadline
 
-Threadline is a compact, static-first reader for community news. It combines Hacker News and Lobsters into one local, customizable front page with fast feed loading, source filters, discussion reading, and an optional inline article reader on larger screens.
+A compact Hacker News and Lobsters reader with local discussions and adjustable feed ranking. Go serves the bundled HTML, CSS, and original logo; no frontend build or JavaScript is required.
 
-Preferences live in `localStorage`; no account or backend database is required.
+## Run
 
-## Screenshots
+Requires Go 1.24 or later, available through `nix develop`.
 
-### List layout
+```sh
+go run .
+# http://localhost:8080
+```
 
-![Threadline list layout](docs/screenshots/frontpage-list.png)
+To build a standalone binary:
 
-### Grid layout, sepia theme
+```sh
+make build
+```
 
-![Threadline grid layout in sepia theme](docs/screenshots/frontpage-grid-sepia.png)
+## Configuration
 
-### Inline reader and discussion
+| Environment variable      | Default                 | Purpose                                                      |
+| ------------------------- | ----------------------- | ------------------------------------------------------------ |
+| `ADDR`                    | `:8080`                 | Listen address                                               |
+| `HN_DISCUSSION_PROVIDERS` | `html,firebase,algolia` | Ordered discussion providers; omit providers to disable them |
+| `THREADLINE_CONTACT`      | Unset                   | Public operator email or URL appended to the User-Agent      |
 
-![Threadline read-here split reader](docs/screenshots/read-here.png)
+All upstream requests identify Threadline and its repository. Fetching is demand-driven with shared in-memory caching, request coalescing, and failure backoff. HN HTML requests are spaced at least 30 seconds apart; Lobsters requests are spaced at least three seconds apart and capped at 120 per hour. Restarting clears cached data. Algolia can lag; Firebase fallback previews replies with links to expand them.
 
-## Features
-
-- Combined Hacker News and Lobsters feed
-- List and newspaper-style grid layouts
-- Light, dark, and sepia themes
-- Local source, ranking, domain, and Lobsters tag preferences
-- Nested discussion view with collapse and comment navigation
-- Inline article reader on desktop/tablet
-- Static React app deployable on Cloudflare Pages
-- Cloudflare Pages Functions for feed aggregation and Lobsters CORS proxy
+Ranking preferences are saved in a browser cookie through Settings. Login, voting, and posting use links to the original sites.
 
 ## Development
 
-```bash
-nix develop
-pnpm install
-pnpm dev
+`nix develop` includes Go, Node.js, and Make. Node.js is used only for source formatting.
+
+```sh
+npm ci
+make format        # gofmt + Prettier (including Go HTML templates)
+make format-check
+make test          # race tests + go vet
+make build         # minify assets, then embed in the production binary
 ```
 
-Checks:
+Development (`go run .`) embeds readable files from `web/`. Production builds embed minified HTML and CSS from `.build/`; generated files are ignored by Git. Minification runs at build time, with no runtime dependency. The binary still includes the entire frontend.
 
-```bash
-pnpm typecheck
-pnpm test
-pnpm build
-```
-
+GitHub Actions checks formatting, tests both asset variants, and uploads the Linux binary.

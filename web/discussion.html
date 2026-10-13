@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="{{ favicon }}" />
+    <title>{{ .Story.Title }} — Threadline</title>
+<style>{{.CSS}}</style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <a class="brand" href="/" aria-label="Threadline home">{{ logo }}</a>
+        <nav aria-label="Main">
+          <a href="/">Active</a><a href="/?mode=recent">Recent</a>
+        </nav>
+        <a class="header-settings" href="/settings">Settings</a>
+      </header>
+      <main>
+        <a class="back" href="/?source={{ .Story.Source }}"
+          >← {{ label .Story.Source }}</a
+        >
+        <article class="discussion-story">
+          <h1><a href="{{ .Story.URL }}">{{ .Story.Title }}</a></h1>
+          <p class="byline">
+            {{ .Story.Points }} points · via {{ .Story.Author }} ·
+            {{ age .Story.Created }} ago · {{ .Story.Comments }} comments ·
+            <a href="{{ .Story.Discussion }}">Original discussion ↗</a>
+          </p>
+          <div class="comment-body">{{ .Body }}</div>
+        </article>
+        {{ if .Error }}<p class="notice" role="status">{{ .Error }}</p>{{ end }}
+        {{ if .ProviderNotice }}
+          <p class="provider-notice">{{ .ProviderNotice }}</p>
+        {{ end }}
+        <div class="discussion-tools">
+          {{ if .ContextURL }}
+            <a href="{{ .ContextURL }}">← Full discussion</a>
+          {{ end }}<a href="">Refresh comments</a>
+        </div>
+        <section aria-label="Comments" class="comments">
+          {{ range .Comments }}
+            {{ template "comment" . }}
+          {{ else }}
+            {{ if not .Error }}<p class="empty">No comments yet.</p>{{ end }}
+          {{ end }}
+        </section>
+        <nav class="pagination" aria-label="Comment pages">
+          {{ if .PreviousURL }}
+            <a href="{{ .PreviousURL }}">← Previous comments</a>
+          {{ end }}{{ if .NextURL }}
+            <a href="{{ .NextURL }}">More comments →</a>
+          {{ end }}
+        </nav>
+      </main>
+      <footer>
+        <a href="/">Threadline</a
+        ><a href="{{ .Story.Discussion }}"
+          >Reply on {{ label .Story.Source }} ↗</a
+        >
+      </footer>
+    </div>
+  </body>
+</html>
+{{ define "comment" }}
+  <details class="comment" id="comment-{{ .ID }}" open>
+    <summary>
+      <span class="comment-author"
+        >{{ if .Author }}
+          {{ .Author }}
+        {{ else }}
+          [deleted]
+        {{ end }}</span
+      >
+      <span class="comment-meta"
+        >{{ if not .Created.IsZero }}
+          · {{ age .Created }} ago
+        {{ end }}{{ if .HasPoints }}· {{ .Points }} points{{ end }}</span
+      >
+      <a class="comment-original" href="{{ .URL }}">original ↗</a>
+    </summary>
+    <div class="comment-content">
+      <div class="comment-body">{{ .Body }}</div>
+      {{ range .Children }}{{ template "comment" . }}{{ end }}{{ if .MoreURL }}
+        <a class="more-replies" href="{{ .MoreURL }}">More replies →</a>
+      {{ end }}
+    </div>
+  </details>
+{{ end }}

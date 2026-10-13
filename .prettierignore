@@ -1,0 +1,7 @@
+.build/
+.direnv/
+.agents/
+.aws/
+.codex/
+node_modules/
+web/logo.svg
